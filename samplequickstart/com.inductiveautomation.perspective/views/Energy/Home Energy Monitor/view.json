@@ -405,6 +405,18 @@
           }
         },
         "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Label"
+        },
+        "position": {
+          "basis": "32px"
+        },
+        "props": {
+          "text": "Label"
+        },
+        "type": "ia.display.label"
       }
     ],
     "meta": {

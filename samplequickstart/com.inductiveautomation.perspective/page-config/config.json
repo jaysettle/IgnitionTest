@@ -54,6 +54,9 @@
       "title": "",
       "viewPath": "Energy/Home Energy Monitor"
     },
+    "/Data": {
+      "viewPath": "View"
+    },
     "/components": {
       "docks": {
         "left": [
