@@ -405,6 +405,268 @@
           }
         },
         "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "50px"
+            },
+            "props": {
+              "style": {
+                "fontWeight": "bold",
+                "textAlign": "center"
+              },
+              "text": "Garage Temperature"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "TimeSeriesChart"
+            },
+            "position": {
+              "basis": "400px"
+            },
+            "propConfig": {
+              "props.series[0].data": {
+                "binding": {
+                  "config": {
+                    "aggregate": "LastValue",
+                    "avoidScanClassValidation": true,
+                    "dateRange": {
+                      "mostRecent": "5",
+                      "mostRecentUnits": "HOUR"
+                    },
+                    "enableValueCache": true,
+                    "ignoreBadQuality": false,
+                    "polling": {
+                      "enabled": true,
+                      "rate": "1"
+                    },
+                    "preventInterpolation": false,
+                    "returnFormat": "Wide",
+                    "returnSize": {
+                      "numRows": "400",
+                      "type": "FIXED"
+                    },
+                    "tags": [
+                      {
+                        "path": "[Sample_SQLite_Database/ignition-desktop-f73rpe5:mqtt engine]energy/home/garagetemp/temperature"
+                      }
+                    ],
+                    "valueFormat": "DATASET"
+                  },
+                  "type": "tag-history"
+                }
+              }
+            },
+            "props": {
+              "defaultStyles": {
+                "colorScheme": "Pastel1",
+                "colors": [
+                  "#FFE142"
+                ]
+              },
+              "plots": [
+                {
+                  "axes": [
+                    {
+                      "alignment": "left",
+                      "grid": {
+                        "color": "",
+                        "dashArray": 0,
+                        "opacity": 0.9,
+                        "style": {
+                          "classes": ""
+                        },
+                        "visible": false
+                      },
+                      "label": {
+                        "font": {
+                          "color": "",
+                          "size": 10
+                        },
+                        "offset": 0,
+                        "style": {
+                          "classes": ""
+                        },
+                        "text": "",
+                        "visible": true
+                      },
+                      "max": "",
+                      "min": "",
+                      "name": "",
+                      "style": {
+                        "classes": ""
+                      },
+                      "tick": {
+                        "color": "",
+                        "count": "Auto",
+                        "label": {
+                          "font": {
+                            "color": "",
+                            "size": 10
+                          },
+                          "format": "Auto",
+                          "style": {
+                            "classes": ""
+                          }
+                        },
+                        "style": {
+                          "classes": ""
+                        }
+                      },
+                      "width": 60
+                    }
+                  ],
+                  "markers": [
+                    {
+                      "axis": "",
+                      "line": {
+                        "color": "",
+                        "dashArray": 0,
+                        "label": {
+                          "font": {
+                            "color": "",
+                            "size": 10
+                          },
+                          "position": "right",
+                          "style": {
+                            "classes": ""
+                          },
+                          "text": ""
+                        },
+                        "opacity": 0.5,
+                        "style": {
+                          "classes": ""
+                        },
+                        "width": 1
+                      },
+                      "type": "line",
+                      "value": 0,
+                      "visible": true
+                    }
+                  ],
+                  "relativeWeight": 2,
+                  "trends": [
+                    {
+                      "axis": "",
+                      "baselines": [
+                        {
+                          "axis": "",
+                          "color": "",
+                          "column": "",
+                          "dashArray": 0,
+                          "function": "avg",
+                          "label": {
+                            "font": {
+                              "color": "",
+                              "size": 10
+                            },
+                            "position": "right",
+                            "style": {
+                              "classes": ""
+                            },
+                            "text": ""
+                          },
+                          "opacity": 0.5,
+                          "style": {
+                            "classes": ""
+                          },
+                          "visible": false,
+                          "width": 1
+                        }
+                      ],
+                      "breakLine": true,
+                      "columns": [
+                        {
+                          "color": "",
+                          "key": "",
+                          "styles": {
+                            "highlighted": {
+                              "fill": {
+                                "color": "",
+                                "opacity": null
+                              },
+                              "stroke": {
+                                "color": "",
+                                "dashArray": null,
+                                "opacity": null,
+                                "width": null
+                              }
+                            },
+                            "muted": {
+                              "fill": {
+                                "color": "",
+                                "opacity": null
+                              },
+                              "stroke": {
+                                "color": "",
+                                "dashArray": null,
+                                "opacity": null,
+                                "width": null
+                              }
+                            },
+                            "normal": {
+                              "fill": {
+                                "color": "",
+                                "opacity": null
+                              },
+                              "stroke": {
+                                "color": "",
+                                "dashArray": null,
+                                "opacity": null,
+                                "width": null
+                              }
+                            },
+                            "selected": {
+                              "fill": {
+                                "color": "",
+                                "opacity": null
+                              },
+                              "stroke": {
+                                "color": "",
+                                "dashArray": null,
+                                "opacity": null,
+                                "width": null
+                              }
+                            }
+                          }
+                        }
+                      ],
+                      "interpolation": "curveLinear",
+                      "radius": 2,
+                      "series": "Temp",
+                      "stack": true,
+                      "type": "line",
+                      "visible": true
+                    }
+                  ]
+                }
+              ],
+              "series": [
+                {
+                  "name": "Temp"
+                }
+              ]
+            },
+            "type": "ia.chart.timeseries"
+          }
+        ],
+        "meta": {
+          "name": "FlexContainer"
+        },
+        "position": {
+          "basis": "200px"
+        },
+        "props": {
+          "direction": "column"
+        },
+        "type": "ia.container.flex"
       }
     ],
     "meta": {
