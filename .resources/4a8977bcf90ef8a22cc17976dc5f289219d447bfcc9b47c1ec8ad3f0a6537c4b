@@ -97,9 +97,17 @@
                   "props.text": {
                     "binding": {
                       "config": {
-                        "expression": "\"Uptime: \" + {[MQTT Engine]Energy/home/energy_monitor/controller/uptime} + \" min\""
+                        "fallbackDelay": 2.5,
+                        "mode": "direct",
+                        "tagPath": "[MQTT Engine]Energy/home/energy_monitor/controller/uptime"
                       },
-                      "type": "expr"
+                      "transforms": [
+                        {
+                          "code": "\tminutes \u003d int(value)\n\tif minutes \u003e\u003d 1440:  # 1440 minutes in a day\n\t\tdays \u003d minutes / 1440.0  # Ensure float division\n\t\treturn \"{:.2f} Days\".format(days)\n\telif minutes \u003e\u003d 60:\n\t\thours \u003d minutes / 60.0  # Ensure float division\n\t\treturn \"{:.2f} Hours\".format(hours)\n\telse:\n\t\treturn \"{} Minutes\".format(minutes)",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "tag"
                     }
                   }
                 },
@@ -344,6 +352,7 @@
                     "mode": "direct",
                     "tagPath": "[MQTT Engine]Energy/home/energy_monitor/emon3/Irms"
                   },
+                  "enabled": false,
                   "type": "tag"
                 }
               },
@@ -354,6 +363,7 @@
                     "mode": "direct",
                     "tagPath": "[MQTT Engine]Energy/home/energy_monitor/emon3/Irms"
                   },
+                  "enabled": false,
                   "type": "tag"
                 }
               }
@@ -375,11 +385,14 @@
                   "title": "Mains 2"
                 },
                 {
+                  "gauge": "Extra",
                   "instancePosition": {},
                   "instanceStyle": {
                     "classes": ""
                   },
-                  "title": "Sensor 3"
+                  "reading": "Extra",
+                  "spark": "value",
+                  "title": "Extra"
                 }
               ],
               "justify": "space-around",
@@ -417,7 +430,8 @@
             },
             "props": {
               "style": {
-                "fontWeight": "bold",
+                "fontFamily": "Helvetica",
+                "fontWeight": "normal",
                 "textAlign": "center"
               },
               "text": "Garage Temperature"
@@ -438,8 +452,8 @@
                     "aggregate": "LastValue",
                     "avoidScanClassValidation": true,
                     "dateRange": {
-                      "mostRecent": "5",
-                      "mostRecentUnits": "HOUR"
+                      "mostRecent": "2",
+                      "mostRecentUnits": "DAY"
                     },
                     "enableValueCache": true,
                     "ignoreBadQuality": false,
@@ -465,6 +479,12 @@
               }
             },
             "props": {
+              "defaultStyles": {
+                "colorScheme": "Pastel1",
+                "colors": [
+                  "#FFE142"
+                ]
+              },
               "plots": [
                 {
                   "axes": [
@@ -545,7 +565,7 @@
                       "visible": true
                     }
                   ],
-                  "relativeWeight": 1,
+                  "relativeWeight": 2,
                   "trends": [
                     {
                       "axis": "",
@@ -646,7 +666,19 @@
                 {
                   "name": "Temp"
                 }
-              ]
+              ],
+              "timeAxis": {
+                "grid": {
+                  "color": "#C0C0C03D",
+                  "visible": true
+                }
+              },
+              "timeRange": {
+                "visible": false
+              },
+              "title": {
+                "height": 30
+              }
             },
             "type": "ia.chart.timeseries"
           }
@@ -661,25 +693,6 @@
           "direction": "column"
         },
         "type": "ia.container.flex"
-      },
-      {
-        "meta": {
-          "name": "Label"
-        },
-        "propConfig": {
-          "props.text": {
-            "binding": {
-              "config": {
-                "fallbackDelay": 2.5,
-                "mode": "direct",
-                "publishInitial": false,
-                "tagPath": "[MQTT Engine]Energy/home/garagetemp/temperature"
-              },
-              "type": "tag"
-            }
-          }
-        },
-        "type": "ia.display.label"
       }
     ],
     "meta": {
