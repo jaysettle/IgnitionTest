@@ -1289,7 +1289,7 @@
               }
             ],
             "meta": {
-              "name": "FlexContainer_0"
+              "name": "Daily and Monthly Cost Label"
             },
             "position": {
               "basis": "200px",
@@ -1571,7 +1571,7 @@
               }
             ],
             "meta": {
-              "name": "FlexContainer_1"
+              "name": "Daily Cost Graph"
             },
             "position": {
               "basis": "200px",
@@ -1587,7 +1587,7 @@
           }
         ],
         "meta": {
-          "name": "FlexContainer_0"
+          "name": "Cost"
         },
         "position": {
           "basis": "200px"
@@ -1859,7 +1859,7 @@
           }
         ],
         "meta": {
-          "name": "FlexContainer"
+          "name": "Garage Temp"
         },
         "position": {
           "basis": "200px"
