@@ -1317,7 +1317,6 @@
                   "style": {
                     "fontFamily": "Helvetica",
                     "fontWeight": "normal",
-                    "marginTop": 3,
                     "textAlign": "center"
                   },
                   "text": "Daily Cost"
