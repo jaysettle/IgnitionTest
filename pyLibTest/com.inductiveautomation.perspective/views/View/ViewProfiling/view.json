@@ -1,0 +1,181 @@
+{
+  "custom": {
+    "enableProfiling": false,
+    "viewName": "ViewProfiling1"
+  },
+  "params": {},
+  "propConfig": {
+    "custom.enableProfiling": {
+      "persistent": true
+    },
+    "custom.viewName": {
+      "persistent": true
+    }
+  },
+  "props": {},
+  "root": {
+    "children": [
+      {
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "script": "\n\t# Import system and append the user-lib directory to the Python path\n\timport sys\n\tsys.path.append(\"C:\\\\Program Files\\\\Inductive Automation\\\\Ignition\\\\user-lib\\\\pylib\")\n\n\t# Import the simplejson library\n\timport simplejson as json\n\n\t# Create a sample dictionary\n\tdata \u003d {\"name\": \"Ignition\", \"type\": \"SCADA\", \"version\": 8.1}\n\n\t# Serialize the dictionary to a JSON string\n\tjson_data \u003d json.dumps(data)\n\n\t# Insert the serialized JSON data into the database\n\tquery \u003d \"INSERT INTO test_data (json_data) VALUES (?)\"\n\tparams \u003d [json_data]\n\n\ttry:\n\t\t# Execute the query\n\t\tsystem.db.runPrepUpdate(query, params, database\u003d\"pyLib\")\n\t\tsystem.perspective.print(\"Serialized JSON inserted successfully!\")\n\texcept Exception as e:\n\t\tsystem.perspective.print(\"Error inserting data: \" + str(e))"
+              },
+              "enabled": false,
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Button 4"
+        },
+        "position": {
+          "height": 34,
+          "width": 221,
+          "x": 60.2,
+          "y": 220
+        },
+        "props": {
+          "text": "simpleJsonLib"
+        },
+        "scripts": {
+          "customMethods": [],
+          "extensionFunctions": null,
+          "messageHandlers": [
+            {
+              "messageType": "triggerAction3",
+              "pageScope": true,
+              "script": "\timport requests\t\n\timport time\n\t\n\tlogger \u003d system.util.getLogger(\"Profiler\")\n\t\n\timport Profiling.ScriptProfiling as ScriptProfiling\n\tview_name \u003d getattr(self, \u0027meta\u0027, {}).get(\u0027name\u0027, \"No Luck\")\n\tscript_name \u003d \"Button 4\"\n\tstart_time \u003d time.time()\n\n\ttry:\n\t\t# Log the library load\n\t\tlogger.info(\"[Button4] Requests library loaded successfully!\")\n\t\t\n\t\t# Perform an HTTP GET request\n\t\turl \u003d \"https://jsonplaceholder.typicode.com/posts/1\"\n\t\tlogger.info(\"[Button4] Sending GET request to URL: {}\".format(url))\n\t\t\n\t\tresponse \u003d requests.get(url)\n\t\t\n\t\t# Log the response JSON\n\t\tlogger.info(\"[Button4] Response JSON: \" + response.text)\n\t\t\n\texcept Exception as e:\n\t\t# Log any exceptions\n\t\tlogger.error(\"[Button4] Error during API request: \" + str(e))\n\t\tpass\n\t\t\n\tfinally:\n\t\t# End profiling\n\t\tend_time \u003d time.time()\n\t\tScriptProfiling.log_profiling(script_name, start_time, end_time)\n\t\tlogger.info(\"[Button4] Profiling completed for script: {}\".format(script_name))\n\n\tlogger.info(\"[Button4] onMessageReceived executed!\")",
+              "sessionScope": false,
+              "viewScope": true
+            }
+          ]
+        },
+        "type": "ia.input.button"
+      },
+      {
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "script": "\turl \u003d \"https://jsonplaceholder.typicode.com/posts/1\"\n\ttry:\n\t\t# Perform an HTTP GET request\n\t\tresponse \u003d system.net.httpGet(url)\n\t\tsystem.perspective.print(\"Response JSON: \" + response)\n\texcept Exception as e:\n\t\tsystem.perspective.print(\"Error: \" + str(e))"
+              },
+              "enabled": false,
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Button 3"
+        },
+        "position": {
+          "height": 34,
+          "width": 221,
+          "x": 60.2,
+          "y": 166
+        },
+        "props": {
+          "text": "nativeIgnitionRequests"
+        },
+        "scripts": {
+          "customMethods": [],
+          "extensionFunctions": null,
+          "messageHandlers": [
+            {
+              "messageType": "triggerAction2",
+              "pageScope": true,
+              "script": "\timport time\t\n\t\t\n\timport Profiling.ScriptProfiling as ScriptProfiling\n\tview_name \u003d getattr(self, \u0027meta\u0027, {}).get(\u0027name\u0027, \"No Luck\")\n\tscript_name \u003d \"Button 3\"\n\tstart_time \u003d time.time()\n\t\n\turl \u003d \"https://jsonplaceholder.typicode.com/posts/1\"\n\ttry:\n\t\t# Perform an HTTP GET request\n\t\tresponse \u003d system.net.httpGet(url)\n\t\tsystem.perspective.sendMessage(\"triggerAction3\", scope\u003d\"view\")\n\texcept Exception as e:\n\t\tpass\n\t\n\tfinally:\n\t\tend_time \u003d time.time()\n\t\tScriptProfiling.log_profiling(script_name, start_time, end_time)\n\n\t",
+              "sessionScope": false,
+              "viewScope": true
+            }
+          ]
+        },
+        "type": "ia.input.button"
+      },
+      {
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "script": "\timport sys\n\tsys.path.append(\"C:\\\\Program Files\\\\Inductive Automation\\\\Ignition\\\\user-lib\\\\pylib\")\n\n\ttry:\n\t\timport requests\n\t\tsystem.perspective.print(\"Requests library loaded successfully!\")\n\t\t\n\t\t# Test an HTTP GET request\n\t\turl \u003d \"https://jsonplaceholder.typicode.com/posts/1\"\n\t\tresponse \u003d requests.get(url)\n\t\tsystem.perspective.print(\"Response JSON: \" + response.text)\n\texcept Exception as e:\n\t\tsystem.perspective.print(\"Error: \" + str(e))"
+              },
+              "enabled": false,
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Button 2"
+        },
+        "position": {
+          "height": 34,
+          "width": 221,
+          "x": 60.2,
+          "y": 112
+        },
+        "props": {
+          "text": "requestLib"
+        },
+        "scripts": {
+          "customMethods": [],
+          "extensionFunctions": null,
+          "messageHandlers": [
+            {
+              "messageType": "triggerAction1",
+              "pageScope": true,
+              "script": "\timport sys\n\timport requests\n\timport time\n\timport system\n\t\n\tsys.path.append(\"C:\\\\Program Files\\\\Inductive Automation\\\\Ignition\\\\user-lib\\\\pylib\")\n\t\n\t# Define the logger\n\tlogger \u003d system.util.getLogger(\"Profiler\")\n\t\n\t#Top Profiling part for common scripts\n\timport Profiling.ScriptProfiling as ScriptProfiling\n\tview_name \u003d getattr(self, \u0027meta\u0027, {}).get(\u0027name\u0027, \"No Luck\")\n\tscript_name \u003d \"Button 2\"\n\tstart_time \u003d time.time()\n\n\n\ttry:\n\t\t# Log the library load\n\t\tlogger.info(\"[Button2] Requests library loaded successfully!\")\n\n\t\t# Perform an HTTP GET request\n\t\turl \u003d \"https://jsonplaceholder.typicode.com/posts/1\"\n\t\tlogger.info(\"[Button2] Sending GET request to URL: {}\".format(url))\n\n\t\tresponse \u003d requests.get(url)\n\n\t\t# Log the response JSON\n\t\tlogger.info(\"[Button2] Response JSON: \" + response.text)\n\n\t\t# Send a follow-up message with session_id and view_name\n\t\tsystem.perspective.sendMessage(\"triggerAction2\", scope\u003d\"view\")\n\n\texcept Exception as e:\n\t\t# Log any exceptions\n\t\tlogger.error(\"[Button2] Error during API request: \" + str(e))\n\t\tpass\n\n\tfinally:\n\t\t# End profiling\n\t\tend_time \u003d time.time()\n\t\tScriptProfiling.log_profiling(script_name, start_time, end_time)\n\t\tlogger.info(\"[Button2] Profiling completed for script: {}\".format(script_name))\n\n\tlogger.info(\"[Button2] onMessageReceived executed!\")",
+              "sessionScope": false,
+              "viewScope": true
+            }
+          ]
+        },
+        "type": "ia.input.button"
+      },
+      {
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "script": "\timport time\n\timport sys\n\timport system\n\timport requests\n\tsys.path.append(\"C:\\\\Program Files\\\\Inductive Automation\\\\Ignition\\\\user-lib\\\\pylib\")\n\t\n\tlogger \u003d system.util.getLogger(\"Profiler\")\n\t\n\t#This is the first part of ScriptProfiling code\n\timport Profiling.ScriptProfiling as ScriptProfiling\n\tstart_time \u003d time.time()\n\tscript_name \u003d getattr(self, \u0027meta\u0027, {}).get(\u0027name\u0027, \"No Luck\")\n\ttry:\n\t\t# Clear the profiling_logs table. Only do this on the first fired event.\n\t\tScriptProfiling.clear_db_data()\n\t\n\t\t# Run your game\n\t\turl \u003d \"https://api.openai.com/v1/chat/completions\"\n\t\tapi_key \u003d \"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\"\n\t\theaders \u003d {\"Authorization\": \"Bearer {}\".format(api_key), \"Content-Type\": \"application/json\"}\n\t\tdata \u003d {\n\t\t\t\"model\": \"gpt-4o\",\n\t\t\t\"messages\": [\n\t\t\t\t{\"role\": \"system\", \"content\": \"You are a helpful assistant.\"},\n\t\t\t\t{\"role\": \"user\", \"content\": \"Tell me something interesting about space.\"}\n\t\t\t],\n\t\t\t\"max_tokens\": 150,\n\t\t\t\"temperature\": 0.7\n\t\t}\n\t\n\t\tlogger.info(\"[Button1] Sending API request to: {}\".format(url))\n\t\tresponse \u003d requests.post(url, headers\u003dheaders, json\u003ddata)\n\t\n\t\tif response.status_code \u003d\u003d 200:\n\t\t\tlogger.info(\"[Button1] API response: \" + response.text)\n\t\t\tpass\n\t\telse:\n\t\t\terror_message \u003d \"Error: {} - {}\".format(response.status_code, response.text)\n\t\t\tlogger.error(\"[Button1] \" + error_message)\n\t\n\t\tsystem.perspective.sendMessage(\"triggerAction1\", scope\u003d\"view\")\n\t\n\t#This is the last part of the ScriptProfiling code\n\tfinally:\n\t\tend_time \u003d time.time()\n\t\texecution_time \u003d end_time - start_time\n\t\tlogger.info(\"[Button1] Script execution completed. Time taken: {:.6f}s\".format(execution_time))\n\t\tScriptProfiling.log_profiling(script_name, start_time, end_time)"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Button 1"
+        },
+        "position": {
+          "height": 34,
+          "width": 221,
+          "x": 60.21,
+          "y": 58
+        },
+        "props": {
+          "text": "OpenAI"
+        },
+        "type": "ia.input.button"
+      }
+    ],
+    "events": {
+      "dom": {
+        "onClick": {
+          "config": {
+            "script": "\n\t# Import system and append the user-lib directory to the Python path\n\timport sys\n\tsys.path.append(\"C:\\\\Program Files\\\\Inductive Automation\\\\Ignition\\\\user-lib\\\\pylib\")\n\n\ttry:\n\t\t# Import the requests library\n\t\timport requests\n\t\tsystem.perspective.print(\"Requests library loaded successfully!\")\n\texcept Exception as e:\n\t\tsystem.perspective.print(\"Error loading requests: \" + str(e))"
+          },
+          "scope": "G",
+          "type": "script"
+        }
+      }
+    },
+    "meta": {
+      "name": "root"
+    },
+    "type": "ia.container.coord"
+  }
+}

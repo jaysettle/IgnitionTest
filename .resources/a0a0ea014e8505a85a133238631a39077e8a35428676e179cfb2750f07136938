@@ -1,0 +1,1355 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {
+    "defaultSize": {
+      "width": 1200
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "basis": "100px",
+              "grow": 1
+            },
+            "props": {
+              "text": "Energy Monitor",
+              "textStyle": {
+                "fontFamily": "Helvetica",
+                "fontSize": 25,
+                "fontWeight": "bold",
+                "textAlign": "center"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "position": {
+                  "basis": "30px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "\"Heartbeat - \" + {[MQTT Engine]Energy/home/energy_monitor/count}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "textStyle": {
+                    "fontSize": 20,
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_1"
+                },
+                "position": {
+                  "basis": "30px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "fallbackDelay": 2.5,
+                        "mode": "direct",
+                        "tagPath": "[MQTT Engine]Energy/home/energy_monitor/controller/memory"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "textStyle": {
+                    "fontSize": 20,
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_2"
+                },
+                "position": {
+                  "basis": "30px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "fallbackDelay": 2.5,
+                        "mode": "direct",
+                        "tagPath": "[MQTT Engine]Energy/home/energy_monitor/controller/uptime"
+                      },
+                      "transforms": [
+                        {
+                          "code": "\tminutes \u003d int(value)\n\tif minutes \u003e\u003d 1440:  # 1440 minutes in a day\n\t\tdays \u003d minutes / 1440.0  \n\t\treturn \"{:.2f} Days\".format(days)\n\telif minutes \u003e\u003d 60:\n\t\thours \u003d minutes / 60.0  \n\t\treturn \"{:.2f} Hours\".format(hours)\n\telse:\n\t\treturn \"{} Minutes\".format(minutes)",
+                          "type": "script"
+                        }
+                      ],
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "textStyle": {
+                    "fontSize": 20,
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_3"
+                },
+                "position": {
+                  "basis": "30px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "\"MQTT Reconnect Count: \" + {[MQTT Engine]Energy/home/energy_monitor/mqtt/reconnectCount}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "textStyle": {
+                    "fontSize": 20,
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FlexContainer"
+            },
+            "position": {
+              "basis": "50px"
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "Header"
+        },
+        "position": {
+          "basis": "100px"
+        },
+        "props": {
+          "direction": "column"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "FlexRepeater"
+            },
+            "position": {
+              "basis": "636px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.instances[0].chart": {
+                "binding": {
+                  "config": {
+                    "aggregate": "LastValue",
+                    "avoidScanClassValidation": true,
+                    "dateRange": {
+                      "mostRecent": "1",
+                      "mostRecentUnits": "HOUR"
+                    },
+                    "enableValueCache": true,
+                    "ignoreBadQuality": false,
+                    "polling": {
+                      "enabled": true,
+                      "rate": "5"
+                    },
+                    "preventInterpolation": false,
+                    "returnFormat": "Wide",
+                    "returnSize": {
+                      "numRows": "200",
+                      "type": "FIXED"
+                    },
+                    "tags": [
+                      {
+                        "path": "[Sample_SQLite_Database/ignition-desktop-f73rpe5:mqtt engine]energy/home/energy_monitor/emon1/irms"
+                      }
+                    ],
+                    "valueFormat": "DATASET"
+                  },
+                  "type": "tag-history"
+                }
+              },
+              "props.instances[0].gauge": {
+                "binding": {
+                  "config": {
+                    "fallbackDelay": 2.5,
+                    "mode": "direct",
+                    "tagPath": "[MQTT Engine]Energy/home/energy_monitor/emon1/Irms"
+                  },
+                  "type": "tag"
+                }
+              },
+              "props.instances[0].reading": {
+                "binding": {
+                  "config": {
+                    "fallbackDelay": 2.5,
+                    "mode": "direct",
+                    "tagPath": "[MQTT Engine]Energy/home/energy_monitor/emon1/Irms"
+                  },
+                  "type": "tag"
+                }
+              },
+              "props.instances[0].spark": {
+                "binding": {
+                  "config": {
+                    "aggregate": "MinMax",
+                    "avoidScanClassValidation": true,
+                    "dateRange": {
+                      "endDate": "now(0)",
+                      "startDate": "dateArithmetic(now(0), -1, \u0027hour\u0027)"
+                    },
+                    "enableValueCache": true,
+                    "ignoreBadQuality": false,
+                    "preventInterpolation": false,
+                    "returnFormat": "Wide",
+                    "returnSize": {
+                      "delay": "5",
+                      "delayUnits": "MIN",
+                      "type": "INTERVAL"
+                    },
+                    "tags": [
+                      {
+                        "aggregate": "LastValue",
+                        "path": "[Sample_SQLite_Database/ignition-desktop-f73rpe5:mqtt engine]energy/home/energy_monitor/emon1/irms"
+                      }
+                    ],
+                    "valueFormat": "DATASET"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tpoints \u003d []\n\tfor i in range(0, value.getRowCount()):\n\t\ttimestamp \u003d value.getValueAt(i, \u0027t_stamp\u0027)  # Assuming the timestamp column is labeled \u0027Timestamp\u0027\n\t\tnum_value \u003d value.getValueAt(i, \u0027irms\u0027)  # Assuming the value column is labeled \u0027Value\u0027\n\t\tpoints.append({\u0027x\u0027: timestamp, \u0027y\u0027: num_value})\n\treturn points\n\t",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "tag-history"
+                }
+              },
+              "props.instances[1].chart": {
+                "binding": {
+                  "config": {
+                    "aggregate": "LastValue",
+                    "avoidScanClassValidation": true,
+                    "dateRange": {
+                      "mostRecent": "1",
+                      "mostRecentUnits": "HOUR"
+                    },
+                    "enableValueCache": true,
+                    "ignoreBadQuality": false,
+                    "polling": {
+                      "enabled": true,
+                      "rate": "5"
+                    },
+                    "preventInterpolation": false,
+                    "returnFormat": "Wide",
+                    "returnSize": {
+                      "numRows": "200",
+                      "type": "FIXED"
+                    },
+                    "tags": [
+                      {
+                        "path": "[Sample_SQLite_Database/ignition-desktop-f73rpe5:mqtt engine]energy/home/energy_monitor/emon2/irms"
+                      }
+                    ],
+                    "valueFormat": "DATASET"
+                  },
+                  "type": "tag-history"
+                }
+              },
+              "props.instances[1].gauge": {
+                "binding": {
+                  "config": {
+                    "fallbackDelay": 2.5,
+                    "mode": "direct",
+                    "tagPath": "[MQTT Engine]Energy/home/energy_monitor/emon2/Irms"
+                  },
+                  "type": "tag"
+                }
+              },
+              "props.instances[1].reading": {
+                "binding": {
+                  "config": {
+                    "fallbackDelay": 2.5,
+                    "mode": "direct",
+                    "tagPath": "[MQTT Engine]Energy/home/energy_monitor/emon2/Irms"
+                  },
+                  "type": "tag"
+                }
+              },
+              "props.instances[2].chart": {
+                "binding": {
+                  "config": {
+                    "aggregate": "LastValue",
+                    "avoidScanClassValidation": true,
+                    "dateRange": {
+                      "mostRecent": "1",
+                      "mostRecentUnits": "HOUR"
+                    },
+                    "enableValueCache": true,
+                    "ignoreBadQuality": false,
+                    "polling": {
+                      "enabled": true,
+                      "rate": "5"
+                    },
+                    "preventInterpolation": false,
+                    "returnFormat": "Wide",
+                    "returnSize": {
+                      "numRows": "100",
+                      "type": "FIXED"
+                    },
+                    "tags": [
+                      {
+                        "path": "[Sample_SQLite_Database/ignition-desktop-f73rpe5:mqtt engine]energy/home/energy_monitor/emon3/irms"
+                      }
+                    ],
+                    "valueFormat": "DATASET"
+                  },
+                  "type": "tag-history"
+                }
+              },
+              "props.instances[2].gauge": {
+                "binding": {
+                  "config": {
+                    "fallbackDelay": 2.5,
+                    "mode": "direct",
+                    "tagPath": "[MQTT Engine]Energy/home/energy_monitor/emon5/Irms.value"
+                  },
+                  "type": "tag"
+                }
+              },
+              "props.instances[2].reading": {
+                "binding": {
+                  "config": {
+                    "fallbackDelay": 2.5,
+                    "mode": "direct",
+                    "tagPath": "[MQTT Engine]Energy/home/energy_monitor/emon5/Irms.value"
+                  },
+                  "type": "tag"
+                }
+              }
+            },
+            "props": {
+              "instances": [
+                {
+                  "instancePosition": {},
+                  "instanceStyle": {
+                    "classes": ""
+                  },
+                  "title": "Mains 1"
+                },
+                {
+                  "instancePosition": {},
+                  "instanceStyle": {
+                    "classes": ""
+                  },
+                  "spark": "value",
+                  "title": "Mains 2"
+                },
+                {
+                  "instancePosition": {},
+                  "instanceStyle": {
+                    "classes": ""
+                  },
+                  "spark": "value",
+                  "title": "Sensor 3"
+                }
+              ],
+              "justify": "space-around",
+              "path": "Energy/Energy Template",
+              "useDefaultViewHeight": false,
+              "useDefaultViewWidth": false
+            },
+            "type": "ia.display.flex-repeater"
+          }
+        ],
+        "meta": {
+          "name": "UDT Placeholder"
+        },
+        "position": {
+          "basis": "600px",
+          "grow": 1
+        },
+        "props": {
+          "justify": "space-around",
+          "style": {
+            "marginBottom": 5,
+            "marginTop": 5
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Label"
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "\"Daily Cost: $\" + numberFormat({[default]EnergyMonitor/Cost_Daily}, \"0.00\")"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "textStyle": {
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Label_0"
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "\"Monthly Cost: $\" + numberFormat({[default]EnergyMonitor/Cost_Monthly}, \"0.00\") + \" From: \" + {[default]EnergyMonitor/Energy_Monthly_Start_Date}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "textStyle": {
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "Daily and Monthly Cost Label"
+            },
+            "position": {
+              "basis": "200px",
+              "grow": 1
+            },
+            "props": {
+              "direction": "column",
+              "justify": "space-around",
+              "style": {
+                "classes": "Energy/Energy_UDT_Border"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "TimeSeriesChart"
+                },
+                "position": {
+                  "basis": "400px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.series[0].data": {
+                    "binding": {
+                      "config": {
+                        "aggregate": "LastValue",
+                        "avoidScanClassValidation": true,
+                        "dateRange": {
+                          "mostRecent": "7",
+                          "mostRecentUnits": "DAY"
+                        },
+                        "enableValueCache": true,
+                        "ignoreBadQuality": false,
+                        "polling": {
+                          "enabled": true,
+                          "rate": "5"
+                        },
+                        "preventInterpolation": false,
+                        "returnFormat": "Wide",
+                        "returnSize": {
+                          "numRows": "100",
+                          "type": "FIXED"
+                        },
+                        "tags": [
+                          {
+                            "path": "[default]EnergyMonitor/Cost_Daily"
+                          }
+                        ],
+                        "valueFormat": "DATASET"
+                      },
+                      "type": "tag-history"
+                    }
+                  },
+                  "props.title.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "\"Daily Cost: \" + numberFormat({[default]EnergyMonitor/Cost_Daily.value}, \"0.00\")"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "defaultStyles": {
+                    "colorScheme": "Pastel1",
+                    "colors": [
+                      "#FFE142"
+                    ]
+                  },
+                  "plots": [
+                    {
+                      "axes": [
+                        {
+                          "alignment": "left",
+                          "grid": {
+                            "color": "",
+                            "dashArray": 0,
+                            "opacity": 0.9,
+                            "style": {
+                              "classes": ""
+                            },
+                            "visible": false
+                          },
+                          "label": {
+                            "font": {
+                              "color": "",
+                              "size": 10
+                            },
+                            "offset": 0,
+                            "style": {
+                              "classes": ""
+                            },
+                            "text": "",
+                            "visible": true
+                          },
+                          "max": "",
+                          "min": "",
+                          "name": "",
+                          "style": {
+                            "classes": ""
+                          },
+                          "tick": {
+                            "color": "",
+                            "count": 6,
+                            "label": {
+                              "font": {
+                                "color": "",
+                                "size": 10
+                              },
+                              "format": "d",
+                              "style": {
+                                "classes": ""
+                              }
+                            },
+                            "style": {
+                              "classes": ""
+                            }
+                          },
+                          "width": 60
+                        }
+                      ],
+                      "markers": [
+                        {
+                          "axis": "",
+                          "line": {
+                            "color": "",
+                            "dashArray": 0,
+                            "label": {
+                              "font": {
+                                "color": "",
+                                "size": 10
+                              },
+                              "position": "right",
+                              "style": {
+                                "classes": ""
+                              },
+                              "text": ""
+                            },
+                            "opacity": 0.5,
+                            "style": {
+                              "classes": ""
+                            },
+                            "width": 1
+                          },
+                          "type": "line",
+                          "value": 0,
+                          "visible": true
+                        }
+                      ],
+                      "relativeWeight": 2,
+                      "trends": [
+                        {
+                          "axis": "",
+                          "baselines": [
+                            {
+                              "axis": "",
+                              "color": "",
+                              "column": "",
+                              "dashArray": 0,
+                              "function": "avg",
+                              "label": {
+                                "font": {
+                                  "color": "",
+                                  "size": 10
+                                },
+                                "position": "right",
+                                "style": {
+                                  "classes": ""
+                                },
+                                "text": ""
+                              },
+                              "opacity": 0.5,
+                              "style": {
+                                "classes": ""
+                              },
+                              "visible": false,
+                              "width": 1
+                            }
+                          ],
+                          "breakLine": true,
+                          "columns": [
+                            {
+                              "color": "",
+                              "key": "",
+                              "styles": {
+                                "highlighted": {
+                                  "fill": {
+                                    "color": "",
+                                    "opacity": null
+                                  },
+                                  "stroke": {
+                                    "color": "",
+                                    "dashArray": null,
+                                    "opacity": null,
+                                    "width": null
+                                  }
+                                },
+                                "muted": {
+                                  "fill": {
+                                    "color": "",
+                                    "opacity": null
+                                  },
+                                  "stroke": {
+                                    "color": "",
+                                    "dashArray": null,
+                                    "opacity": null,
+                                    "width": null
+                                  }
+                                },
+                                "normal": {
+                                  "fill": {
+                                    "color": "",
+                                    "opacity": null
+                                  },
+                                  "stroke": {
+                                    "color": "",
+                                    "dashArray": null,
+                                    "opacity": null,
+                                    "width": null
+                                  }
+                                },
+                                "selected": {
+                                  "fill": {
+                                    "color": "",
+                                    "opacity": null
+                                  },
+                                  "stroke": {
+                                    "color": "",
+                                    "dashArray": null,
+                                    "opacity": null,
+                                    "width": null
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "interpolation": "curveLinear",
+                          "radius": 2,
+                          "series": "Cost",
+                          "stack": true,
+                          "type": "line",
+                          "visible": true
+                        }
+                      ]
+                    }
+                  ],
+                  "series": [
+                    {
+                      "name": "Cost"
+                    }
+                  ],
+                  "timeAxis": {
+                    "grid": {
+                      "color": "#C0C0C03D",
+                      "visible": true
+                    },
+                    "tick": {
+                      "label": {
+                        "format": "dddd, h A"
+                      }
+                    },
+                    "tickCount": 2.85
+                  },
+                  "timeRange": {
+                    "visible": false
+                  },
+                  "title": {
+                    "font": {
+                      "color": "#D5D5D5"
+                    },
+                    "height": 30,
+                    "visible": true
+                  }
+                },
+                "type": "ia.chart.timeseries"
+              }
+            ],
+            "meta": {
+              "name": "Daily Cost Graph"
+            },
+            "position": {
+              "basis": "200px",
+              "grow": 1
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "classes": "Energy/Energy_UDT_Border"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "Cost"
+        },
+        "position": {
+          "basis": "200px"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "TimeSeriesChart"
+            },
+            "position": {
+              "basis": "400px"
+            },
+            "propConfig": {
+              "props.series[0].data": {
+                "binding": {
+                  "config": {
+                    "aggregate": "LastValue",
+                    "avoidScanClassValidation": true,
+                    "dateRange": {
+                      "mostRecent": "7",
+                      "mostRecentUnits": "DAY"
+                    },
+                    "enableValueCache": true,
+                    "ignoreBadQuality": false,
+                    "polling": {
+                      "enabled": true,
+                      "rate": "5"
+                    },
+                    "preventInterpolation": false,
+                    "returnFormat": "Wide",
+                    "returnSize": {
+                      "numRows": "100",
+                      "type": "FIXED"
+                    },
+                    "tags": [
+                      {
+                        "path": "[Sample_SQLite_Database/ignition-desktop-f73rpe5:mqtt engine]energy/home/garagetemp/temperature"
+                      }
+                    ],
+                    "valueFormat": "DATASET"
+                  },
+                  "type": "tag-history"
+                }
+              },
+              "props.title.text": {
+                "binding": {
+                  "config": {
+                    "expression": "\"Garage Temp: \" + {[MQTT Engine]Energy/home/garagetemp/temperature.value}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "defaultStyles": {
+                "colorScheme": "Pastel1",
+                "colors": [
+                  "#FFE142"
+                ]
+              },
+              "plots": [
+                {
+                  "axes": [
+                    {
+                      "alignment": "left",
+                      "grid": {
+                        "color": "",
+                        "dashArray": 0,
+                        "opacity": 0.9,
+                        "style": {
+                          "classes": ""
+                        },
+                        "visible": false
+                      },
+                      "label": {
+                        "font": {
+                          "color": "",
+                          "size": 10
+                        },
+                        "offset": 0,
+                        "style": {
+                          "classes": ""
+                        },
+                        "text": "",
+                        "visible": true
+                      },
+                      "max": "",
+                      "min": "",
+                      "name": "",
+                      "style": {
+                        "classes": ""
+                      },
+                      "tick": {
+                        "color": "",
+                        "count": "Auto",
+                        "label": {
+                          "font": {
+                            "color": "",
+                            "size": 10
+                          },
+                          "format": "Auto",
+                          "style": {
+                            "classes": ""
+                          }
+                        },
+                        "style": {
+                          "classes": ""
+                        }
+                      },
+                      "width": 60
+                    }
+                  ],
+                  "markers": [
+                    {
+                      "axis": "",
+                      "line": {
+                        "color": "",
+                        "dashArray": 0,
+                        "label": {
+                          "font": {
+                            "color": "",
+                            "size": 10
+                          },
+                          "position": "right",
+                          "style": {
+                            "classes": ""
+                          },
+                          "text": ""
+                        },
+                        "opacity": 0.5,
+                        "style": {
+                          "classes": ""
+                        },
+                        "width": 1
+                      },
+                      "type": "line",
+                      "value": 0,
+                      "visible": true
+                    }
+                  ],
+                  "relativeWeight": 2,
+                  "trends": [
+                    {
+                      "axis": "",
+                      "baselines": [
+                        {
+                          "axis": "",
+                          "color": "",
+                          "column": "",
+                          "dashArray": 0,
+                          "function": "avg",
+                          "label": {
+                            "font": {
+                              "color": "",
+                              "size": 10
+                            },
+                            "position": "right",
+                            "style": {
+                              "classes": ""
+                            },
+                            "text": ""
+                          },
+                          "opacity": 0.5,
+                          "style": {
+                            "classes": ""
+                          },
+                          "visible": false,
+                          "width": 1
+                        }
+                      ],
+                      "breakLine": true,
+                      "columns": [
+                        {
+                          "color": "",
+                          "key": "",
+                          "styles": {
+                            "highlighted": {
+                              "fill": {
+                                "color": "",
+                                "opacity": null
+                              },
+                              "stroke": {
+                                "color": "",
+                                "dashArray": null,
+                                "opacity": null,
+                                "width": null
+                              }
+                            },
+                            "muted": {
+                              "fill": {
+                                "color": "",
+                                "opacity": null
+                              },
+                              "stroke": {
+                                "color": "",
+                                "dashArray": null,
+                                "opacity": null,
+                                "width": null
+                              }
+                            },
+                            "normal": {
+                              "fill": {
+                                "color": "",
+                                "opacity": null
+                              },
+                              "stroke": {
+                                "color": "",
+                                "dashArray": null,
+                                "opacity": null,
+                                "width": null
+                              }
+                            },
+                            "selected": {
+                              "fill": {
+                                "color": "",
+                                "opacity": null
+                              },
+                              "stroke": {
+                                "color": "",
+                                "dashArray": null,
+                                "opacity": null,
+                                "width": null
+                              }
+                            }
+                          }
+                        }
+                      ],
+                      "interpolation": "curveLinear",
+                      "radius": 2,
+                      "series": "Temp",
+                      "stack": true,
+                      "type": "line",
+                      "visible": true
+                    }
+                  ]
+                }
+              ],
+              "series": [
+                {
+                  "name": "Temp"
+                }
+              ],
+              "timeAxis": {
+                "grid": {
+                  "color": "#C0C0C03D",
+                  "visible": true
+                }
+              },
+              "timeRange": {
+                "visible": false
+              },
+              "title": {
+                "font": {
+                  "color": "#D5D5D5"
+                },
+                "height": 30,
+                "style": {
+                  "color": "#FFFFFF"
+                },
+                "visible": true
+              }
+            },
+            "type": "ia.chart.timeseries"
+          }
+        ],
+        "meta": {
+          "name": "Garage Temp"
+        },
+        "position": {
+          "basis": "200px"
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "classes": "Energy/Energy_UDT_Border",
+            "margin": 5
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "TimeSeriesChart"
+            },
+            "position": {
+              "basis": "400px"
+            },
+            "propConfig": {
+              "props.series[0].data": {
+                "binding": {
+                  "config": {
+                    "aggregate": "LastValue",
+                    "avoidScanClassValidation": true,
+                    "dateRange": {
+                      "mostRecent": "2",
+                      "mostRecentUnits": "DAY"
+                    },
+                    "enableValueCache": true,
+                    "ignoreBadQuality": false,
+                    "polling": {
+                      "enabled": true,
+                      "rate": "5"
+                    },
+                    "preventInterpolation": false,
+                    "returnFormat": "Wide",
+                    "returnSize": {
+                      "numRows": "100",
+                      "type": "FIXED"
+                    },
+                    "tags": [
+                      {
+                        "path": "[Sample_SQLite_Database/ignition-desktop-f73rpe5:mqtt engine]energy/home/anotheratemp/temperature"
+                      }
+                    ],
+                    "valueFormat": "DATASET"
+                  },
+                  "type": "tag-history"
+                }
+              },
+              "props.title.text": {
+                "binding": {
+                  "config": {
+                    "expression": "\"Bathroom Temp: \" + {[MQTT Engine]Energy/home/anotheratemp/temperature.value}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "defaultStyles": {
+                "colorScheme": "Pastel1",
+                "colors": [
+                  "#FFE142"
+                ]
+              },
+              "plots": [
+                {
+                  "axes": [
+                    {
+                      "alignment": "left",
+                      "grid": {
+                        "color": "",
+                        "dashArray": 0,
+                        "opacity": 0.9,
+                        "style": {
+                          "classes": ""
+                        },
+                        "visible": false
+                      },
+                      "label": {
+                        "font": {
+                          "color": "",
+                          "size": 10
+                        },
+                        "offset": 0,
+                        "style": {
+                          "classes": ""
+                        },
+                        "text": "",
+                        "visible": true
+                      },
+                      "max": "",
+                      "min": "",
+                      "name": "",
+                      "style": {
+                        "classes": ""
+                      },
+                      "tick": {
+                        "color": "",
+                        "count": "Auto",
+                        "label": {
+                          "font": {
+                            "color": "",
+                            "size": 10
+                          },
+                          "format": "Auto",
+                          "style": {
+                            "classes": ""
+                          }
+                        },
+                        "style": {
+                          "classes": ""
+                        }
+                      },
+                      "width": 60
+                    }
+                  ],
+                  "markers": [
+                    {
+                      "axis": "",
+                      "line": {
+                        "color": "",
+                        "dashArray": 0,
+                        "label": {
+                          "font": {
+                            "color": "",
+                            "size": 10
+                          },
+                          "position": "right",
+                          "style": {
+                            "classes": ""
+                          },
+                          "text": ""
+                        },
+                        "opacity": 0.5,
+                        "style": {
+                          "classes": ""
+                        },
+                        "width": 1
+                      },
+                      "type": "line",
+                      "value": 0,
+                      "visible": true
+                    }
+                  ],
+                  "relativeWeight": 2,
+                  "trends": [
+                    {
+                      "axis": "",
+                      "baselines": [
+                        {
+                          "axis": "",
+                          "color": "",
+                          "column": "",
+                          "dashArray": 0,
+                          "function": "avg",
+                          "label": {
+                            "font": {
+                              "color": "",
+                              "size": 10
+                            },
+                            "position": "right",
+                            "style": {
+                              "classes": ""
+                            },
+                            "text": ""
+                          },
+                          "opacity": 0.5,
+                          "style": {
+                            "classes": ""
+                          },
+                          "visible": false,
+                          "width": 1
+                        }
+                      ],
+                      "breakLine": true,
+                      "columns": [
+                        {
+                          "color": "",
+                          "key": "",
+                          "styles": {
+                            "highlighted": {
+                              "fill": {
+                                "color": "",
+                                "opacity": null
+                              },
+                              "stroke": {
+                                "color": "",
+                                "dashArray": null,
+                                "opacity": null,
+                                "width": null
+                              }
+                            },
+                            "muted": {
+                              "fill": {
+                                "color": "",
+                                "opacity": null
+                              },
+                              "stroke": {
+                                "color": "",
+                                "dashArray": null,
+                                "opacity": null,
+                                "width": null
+                              }
+                            },
+                            "normal": {
+                              "fill": {
+                                "color": "",
+                                "opacity": null
+                              },
+                              "stroke": {
+                                "color": "",
+                                "dashArray": null,
+                                "opacity": null,
+                                "width": null
+                              }
+                            },
+                            "selected": {
+                              "fill": {
+                                "color": "",
+                                "opacity": null
+                              },
+                              "stroke": {
+                                "color": "",
+                                "dashArray": null,
+                                "opacity": null,
+                                "width": null
+                              }
+                            }
+                          }
+                        }
+                      ],
+                      "interpolation": "curveLinear",
+                      "radius": 2,
+                      "series": "aTemp",
+                      "stack": true,
+                      "type": "line",
+                      "visible": true
+                    }
+                  ]
+                }
+              ],
+              "series": [
+                {
+                  "name": "aTemp"
+                }
+              ],
+              "timeAxis": {
+                "grid": {
+                  "color": "#C0C0C03D",
+                  "visible": true
+                }
+              },
+              "timeRange": {
+                "visible": false
+              },
+              "title": {
+                "font": {
+                  "color": "#D5D5D5"
+                },
+                "height": 30,
+                "style": {
+                  "color": "#FFFFFF"
+                },
+                "visible": true
+              }
+            },
+            "type": "ia.chart.timeseries"
+          }
+        ],
+        "meta": {
+          "name": "Garage Temp_0"
+        },
+        "position": {
+          "basis": "200px"
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "classes": "Energy/Energy_UDT_Border",
+            "margin": 5
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "script": "\n    system.cirruslink.engine.publish(\n        \"EnergyMonitor\",  # Replace with your MQTT Server name if different\n        \"home/tylights/rgb/set\",\n        \u0027{\"r\":0,\"g\":0,\"b\":255}\u0027,  # Corrected payload\n        0,  # QoS Level\n        False  # Retain flag\n    )"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Button"
+        },
+        "position": {
+          "basis": "34px"
+        },
+        "type": "ia.input.button"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column"
+    },
+    "type": "ia.container.flex"
+  }
+}

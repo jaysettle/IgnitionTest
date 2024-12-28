@@ -1,0 +1,182 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {
+    "defaultSize": {
+      "width": 1200
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Table"
+        },
+        "position": {
+          "height": 231,
+          "width": 1021,
+          "x": 81,
+          "y": 24
+        },
+        "propConfig": {
+          "props.data": {
+            "binding": {
+              "config": {
+                "parameters": {
+                  "stats": "\u0027Completed\u0027"
+                },
+                "polling": {
+                  "enabled": true,
+                  "rate": "2"
+                },
+                "queryPath": "Datas/Orders"
+              },
+              "type": "query"
+            }
+          }
+        },
+        "props": {
+          "selection": {
+            "data": [
+              {
+                "AvgDaysToPayment": -89,
+                "CustomerID": 380,
+                "FirstName": "FirstName375",
+                "LargestPayment": 520,
+                "LastName": "LastName375",
+                "TotalAmountSpent": 16435,
+                "TotalOrders": 10
+              }
+            ],
+            "selectedColumn": "TotalAmountSpent",
+            "selectedRow": 3
+          }
+        },
+        "type": "ia.display.table"
+      },
+      {
+        "meta": {
+          "name": "Dropdown"
+        },
+        "position": {
+          "height": 36,
+          "width": 175,
+          "x": 81.00000762939453,
+          "y": 274
+        },
+        "props": {
+          "options": [
+            {
+              "label": "CustomerID 1",
+              "value": 1
+            },
+            {
+              "label": "CustomerID 2",
+              "value": 2
+            }
+          ],
+          "value": 2
+        },
+        "type": "ia.input.dropdown"
+      },
+      {
+        "meta": {
+          "name": "Label"
+        },
+        "position": {
+          "height": 32,
+          "width": 143,
+          "x": 81.00000762939453,
+          "y": 322
+        },
+        "props": {
+          "text": 1
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Table_0"
+        },
+        "position": {
+          "height": 173,
+          "width": 794,
+          "x": 310,
+          "y": 274
+        },
+        "propConfig": {
+          "props.data": {
+            "binding": {
+              "config": {
+                "parameters": {
+                  "myValueX": "{../Dropdown.props.value}"
+                },
+                "queryPath": "Datas/Query"
+              },
+              "type": "query"
+            }
+          }
+        },
+        "type": "ia.display.table"
+      },
+      {
+        "meta": {
+          "name": "Table_1"
+        },
+        "position": {
+          "height": 270,
+          "width": 794,
+          "x": 310,
+          "y": 481
+        },
+        "propConfig": {
+          "props.data": {
+            "binding": {
+              "config": {
+                "parameters": {
+                  "myValueX": "{../Dropdown_0.props.value}"
+                },
+                "polling": {
+                  "enabled": true,
+                  "rate": "2"
+                },
+                "queryPath": "Datas/OrdersParm"
+              },
+              "type": "query"
+            }
+          }
+        },
+        "type": "ia.display.table"
+      },
+      {
+        "meta": {
+          "name": "Dropdown_0"
+        },
+        "position": {
+          "height": 36,
+          "width": 175,
+          "x": 81,
+          "y": 481
+        },
+        "props": {
+          "options": [
+            {
+              "label": "Completed",
+              "value": "Completed"
+            },
+            {
+              "label": "Pending",
+              "value": "Pending"
+            }
+          ],
+          "value": "Completed"
+        },
+        "type": "ia.input.dropdown"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "type": "ia.container.coord"
+  }
+}
