@@ -1,0 +1,115 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {},
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "EmbeddedView"
+            },
+            "position": {
+              "height": 179,
+              "width": 166,
+              "x": 102,
+              "y": 31.8281
+            },
+            "props": {
+              "params": {
+                "rootTagPath": "[default]Pump 3"
+              },
+              "path": "Templates/Symbol/Pump"
+            },
+            "type": "ia.display.view"
+          },
+          {
+            "meta": {
+              "name": "EmbeddedView_0"
+            },
+            "position": {
+              "height": 179,
+              "width": 166,
+              "x": 351,
+              "y": 31.455
+            },
+            "props": {
+              "params": {
+                "rootTagPath": "[default]Tank 1"
+              },
+              "path": "Templates/Symbol/Tank"
+            },
+            "type": "ia.display.view"
+          }
+        ],
+        "meta": {
+          "name": "CoordinateContainer"
+        },
+        "position": {
+          "basis": "300px"
+        },
+        "type": "ia.container.coord"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Table"
+            },
+            "position": {
+              "height": 470,
+              "width": 782,
+              "x": 9,
+              "y": 9.329999999999998
+            },
+            "propConfig": {
+              "props.data": {
+                "binding": {
+                  "config": {
+                    "fallbackDelay": 2.5,
+                    "mode": "direct",
+                    "tagPath": "[MQTT Distributor]Distributor Info/MQTT Clients.value"
+                  },
+                  "type": "tag"
+                }
+              }
+            },
+            "props": {
+              "selection": {
+                "data": [
+                  {
+                    "ClientId": "threetemp-5ccf7fc11f1b",
+                    "Connected": false,
+                    "IP Address": "192.168.3.45",
+                    "Last Connect Time": 1735413334330,
+                    "Last Disconnect Time": 1735413650769,
+                    "Username": "admin"
+                  }
+                ],
+                "selectedColumn": "Connected",
+                "selectedRow": 0
+              }
+            },
+            "type": "ia.display.table"
+          }
+        ],
+        "meta": {
+          "name": "CoordinateContainer_1"
+        },
+        "position": {
+          "basis": "200px",
+          "grow": 1
+        },
+        "type": "ia.container.coord"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column"
+    },
+    "type": "ia.container.flex"
+  }
+}
